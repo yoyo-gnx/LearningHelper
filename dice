@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中学受験算数・サイコロ問題 完全攻略マニュアル</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @media print {
+            .no-print { display: none; }
+            body { background: white; color: black; }
+        }
+        /* サイコロの3D/2Dアイコンのスタイル */
+        .dice-face {
+            width: 48px;
+            height: 48px;
+            background: white;
+            border: 2px solid #1e293b;
+            border-radius: 8px;
+            display: grid;
+            grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+            padding: 4px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .dice-container {
+            display: inline-flex;
+            gap: 12px;
+            align-items: center;
+            margin: 8px 0;
+        }
+        .pip {
+            background: #0f172a;
+            border-radius: 50%;
+            width: 8px;
+            height: 8px;
+            align-self: center;
+            justify-self: center;
+        }
+        /* 各目のドット配置用ヘルパー */
+        .pip-center { grid-area: 2 / 2 / 3 / 3; }
+        .pip-top-left { grid-area: 1 / 1 / 2 / 2; }
+        .pip-top-right { grid-area: 1 / 3 / 2 / 4; }
+        .pip-mid-left { grid-area: 2 / 1 / 3 / 2; }
+        .pip-mid-right { grid-area: 2 / 3 / 3 / 4; }
+        .pip-bot-left { grid-area: 3 / 1 / 4 / 2; }
+        .pip-bot-right { grid-area: 3 / 3 / 4 / 4; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed">
+
+    <!-- ヘッダー -->
+    <header class="bg-indigo-900 text-white py-10 px-6 shadow-lg mb-8">
+        <div class="max-w-4xl mx-auto">
+            <span class="bg-indigo-700 text-indigo-100 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">中学受験 算数特化教材</span>
+            <h1 class="text-3xl md:text-4xl font-extrabold mt-3 mb-2">サイコロ問題 完全攻略マニュアル</h1>
+            <p class="text-indigo-200 text-sm md:text-base">出題頻度順のパターン別解説、効率的な解き方、別解、および演習問題（各パターン5問）</p>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 pb-16 space-y-12">
+
+        <!-- 目次・概要 -->
+        <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+            <h2 class="text-xl font-bold text-indigo-900 mb-4 border-b pb-2">🎯 本資料の構成と活用法</h2>
+            <p class="text-sm text-slate-600 mb-4">
+                中学受験の算数におけるサイコロ問題は、難関校から中堅校まで頻出の単元です。空間把握能力が問われますが、実は<strong>「回転の法則」「展開図の裏表」「移動の軌跡」</strong>というパターンを押さえれば、短時間で確実に得点源にできます。本資料では出題頻度の高い順に3つのパターンに分類して徹底解説します。
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100">
+                    <span class="block font-bold text-indigo-900 text-lg">パターン1 (頻度: 極めて高)</span>
+                    <span class="text-sm text-indigo-700">ころがし・回転移動の軌跡</span>
+                </div>
+                <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100">
+                    <span class="block font-bold text-indigo-900 text-lg">パターン2 (頻度: 高)</span>
+                    <span class="text-sm text-indigo-700">展開図・向かい合う面と隣り合う面</span>
+                </div>
+                <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100">
+                    <span class="block font-bold text-indigo-900 text-lg">パターン3 (頻度: 中)</span>
+                    <span class="text-sm text-indigo-700">3方向からの見え方・裏返しの判定</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- パターン1 -->
+        <section class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="bg-red-500 text-white font-bold text-sm px-3 py-1 rounded-lg">出題頻度 第1位</span>
+                <h2 class="text-2xl font-bold text-slate-900">パターン1：サイコロのころがし・回転移動</h2>
+            </div>
+            <p class="text-slate-600 mb-6 text-sm">
+                直線上やマス目をサイコロがゴロゴロと転がるとき、指定されたマスに着地したときの「上面」や「接地面（底面）」、または4回転したときの総移動距離などを問う最頻出問題です。
+            </p>
+
+            <!-- 例題 -->
+            <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 mb-6">
+                <h3 class="font-bold text-slate-900 mb-2">【例題1】</h3>
+                <p class="text-sm text-slate-700 mb-4">
+                    右の図のように、目の入れ方が「向かい合う目の和が常に7」の一般的なサイコロがあります。このサイコロをスタート位置から矢印の方向にマス目を沿って4回転ころがしました。スタート時の上面が「1」、手前の側面が「2」のとき、4回転したあとの「上面」の目を答えなさい。（※一般的なサイコロ：向かい合う目の和は 1と6, 2と5, 3と4）
+                </p>
+                <div class="flex items-center gap-4 bg-white p-4 rounded-lg border border-slate-200 mb-4">
+                    <span class="text-xs font-semibold text-slate-500">サイコロの仕組み確認:</span>
+                    <div class="dice-container">
+                        <div class="dice-face" title="上面: 1">
+                            <div class="pip pip-center"></div>
+                        </div>
+                        <span class="text-sm text-slate-600">→ 上:1, 裏:6, 右:?, 左:?, 手前:2, 奥:?</span>
+                    </div>
+                </div>
+
+                <div class="space-y-4 text-sm text-slate-700 border-t pt-4">
+                    <div>
+                        <strong class="text-indigo-900">💡 効率的な解き方（推移のサイクル法）：</strong>
+                        <p class="mt-1">
+                            サイコロを1回転させると、底面だった目が次の進行方向の側面になり、元の側面が底面になります。一般的なサイコロでは<strong>「ころがす前の底面の目 ＝ 7 － ころがした後の底面の目」</strong>ではなく、直感的に4回転の周期（ 1回転：底→進む方向の側面、2回転：底→上面、3回転：底→手前、4回転：底→元の底 ）を利用します。
+                            もっとも早い方法は、進む方向の4つの側面（例：2 → 奥 → 5 → 手前 などのサイクル）を順番に書き出す「4回転の周期表」を作る方法です。
+                        </p>
+                    </div>
+                    <div>
+                        <strong class="text-indigo-900">✨ 解き方のコツ：</strong>
+                        <p class="mt-1">
+                            右・左・手前・奥の4側面がどのように入れ替わるかを「横方向の回転」と「縦方向の回転」に分けて考えず、<strong>「進む方向の4側面がクルクル回る（4回転で元に戻る）」</strong>という性質をメモ用紙の端に矢印でメモ（例：前→上→後→下→前）することです。
+                        </p>
+                    </div>
+                    <div>
+                        <strong class="text-indigo-900">🔍 別解（スタンプ方式）：</strong>
+                        <p class="mt-1">
+                            実際にサイコロの展開図を4回ノートに連続して描き、各回転でどの面が床につくかを順にスタンプを押すように追っていく方法です。正確確実ですが時間がかかるため、試験時間が厳しい場合は周期表法を推奨します。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- パターン1 類題5問 -->
+            <div class="mt-6 border-t pt-6">
+                <h4 class="font-bold text-indigo-900 mb-4">📝 パターン1 類題演習（全5問）</h4>
+                <div class="space-y-4 text-sm text-slate-700">
+                    <div class="bg-slate-50 p-4 rounded-lg border">
+                        <p class="font-semibold text-slate-900">問1</p>
+                        <p>上面が「3」、手前が「1」の一般的なサイコロを、右へ3回転ころがしたとき、上面になる目は何ですか。</p>
+                        <details class="mt-2 text-xs text-indigo-700 cursor-pointer">
+                            <summary class="font-semibold">解答・解説を見る</summary>
+                            <p class="mt-1 text-slate-600">【答え】2（または状況に応じた側面。右回転の側面サイクル：手前1→右→奥→左の順で入れ替わり、3回転目は左側の面が上面にきます）</p>
+                        </details>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-lg border">
+                        <p class="font-semibold text-slate-900">問2</p>
+                        <p>上面が「6」、手前が「2」の一般的なサイコロを、手前方向に2回転、さらに右に2回転させたときの底面の目は何ですか。</p>
+                        <details class="mt-2 text-xs text-indigo-700 cursor-pointer">
+                            <summary class="font-semibold">解答・解説を見る</summary>
+                            <p class="mt-1 text-slate-600">【答え】6。4回転（縦2・横2の組み合わせ）で完全に元の位置・向きに戻るため、上面の6が底面に回ります。</p>
+                        </details>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-lg border">
+                        <p class="font-semibold text-slate-900">問3</p>
+                        <p>1辺が1cmの立方体のサイコロを、方眼紙の上で「右に2回、上に3回、左に1回」ころがしました。スタートの上面が「5」のとき、最後の上面の目は何ですか。</p>
+                        <details class="mt-2 text-xs text-indigo-700 cursor-pointer">
+                            <summary class="font-semibold">解答・解説を見る</summary>
+                            <p class="mt-1 text-slate-600">【答え】2（向かい合う面が5と2）。正味の移動は右に1回、上に3回（計4回転）となるため、4回転の性質により元の目と対面関係になります。</p>
+                        </details>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-lg border">
+                        <p class="font-semibold text-slate-900">問4</p>
+                        <p>一般的なサイコロを、図のL字型のマス目に沿って端から端までころがすとき、ゴール地点での底面の目が「4」でした。スタート地点での上面の目は何ですか。</p>
+                        <details class="mt-2 text-xs text-indigo-700 cursor-pointer">
+                            <summary class="font-semibold">解答・解説を見る</summary>
+                            <p class="mt-1 text-slate-600">【答え】3。底面が4のとき、一般的なサイコロの向かい合う面の性質から上面は3になります（方向転換しても向かい合うペアは不変）。</p>
+                        </details>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-lg border">
+                        <p class="font-semibold text-slate-900">問5</p>
+                        <p>サイコロを直線上で転がし、ちょうど12回転させたとき、移動した総距離は何cmですか。（ただし、サイコロの1辺の長さは3cmとします）</p>
+                        <details class="mt-2 text-xs text-indigo-700 cursor-pointer">
+                            <summary class="font-semibold">解答・解説を見る</summary>
+                            <p class="mt-1 text-slate-600">【答え】36cm（3cm × 12回転 = 36cm。1回転につき1辺の長さ分進みます）。</p>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- パターン2 -->
+        <section class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="bg-amber-500 text-white font-bold text-sm px-3 py-1 rounded-lg">出題頻度 第2位</span>
+                <h2 class="text-2xl font-bold text-slate-900">パターン2：展開図の読み取り・向かい合う面と隣り合う面</h2>
+            </div>
+            <p class="text-slate-600 mb-6 text-sm">
+                立方体の展開図が与えられ、「組み立てたときにどの面とどの面が向かい合うか」「どの面とどの面が隣り合うか、またどの辺で接するか」を瞬時に見抜く問題です。
+            </p>
+
+            <!-- 例題 -->
+            <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 mb-6">
+                <h3 class="font-bold text-slate-900 mb-2">【例題2】</h3>
+                <p class="text-sm text-slate-700 mb-4">
+                    十字型（または一列型）に変形した立方体の展開図において、面「A」の裏側（向かい合う面）にあるアルファベットを答えなさい。また、面「A」の周囲で直接辺を共有して隣り合う4つの面を答えなさい。
+                </p>
+
+                <div class="space-y-4 text-sm text-slate-700 border-t pt-4">
+                    <div>
+                        <strong class="text-indigo-900">💡 効率的な解き方（「1マス飛ばし」と「T字・L字の法則」）：</strong>
+                        <p class="mt-1">
+                            1. <strong>向かい合う面（平行な面）：</strong> 一列に並んだ4つの面のうち、両端から2番目と4番目（間を1マス挟む関係）が向かい合います。また、一列から飛び出た「T字」や「L字」の突き出し部分は、根元から2つ離れた面と対面します。<br>
+                            2. <strong>隣り合う面：</strong> 展開図上で直接辺が接している面、および向かい合う面<strong>以外のすべての面</strong>が隣り合います。
+                        </p>
+                    </div>
+                    <div>
+                        <strong class="text-indigo-900">✨ 解き方のコツ：</strong>
+                        <p class="mt-1">
+                            「一列の法則」を最優先で適用し、残った面同士が対面になることを消去法で確かめます。頭の中で組み立てようとせず、平面のままで位置関係のルール（1マス飛ばし＝対面）を機械的に当てはめるのが最速です。
+                        </p>
+                    </div>
+                    <div>
+                        <strong class="text-indigo-900">🔍 別解（Z字・コの字スライド法）：</strong>
+                        <p class="mt-1">
+                            離れた場所にある面同士を、展開図の折り目に沿って平行移動（スライド）させ、隣り合わせることで視覚的に確認する方法です。立体感覚に不安がある生徒に有効です。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- パターン2 類題5問 -->
+            <div class="mt-6 border-t pt-6">
+                <h4 class="font-bold text-indigo-900 mb-4">📝 パターン2 類題演習（全5問）</h4>
+                <div class="space-y-4 text-sm text-slate-700">
+                    <div class="bg-slate-50 p-4 rounded-lg border">
+                        <p class="font-semibold text-slate-900">問1</p>
+                        <p>「1, 2, 3, 4, 5, 6」の目が書かれた展開図で、「1」の面の反対側にある面は何ですか。</p>
+                        <details class="mt-2 text-xs text-indigo-700 cursor-pointer">
+                            <summary class="font-semibold">解答・解説を見る</summary>
+                            <p class="mt-1 text-slate-600">【答え】展開図の配置によるが、一列に並んだ中で1マス挟んだ位置にある数字（例：1と4が対面など）。</p>
+                        </details>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-lg border">
+                        <p class="font-semibold text-slate-900">問2</p>
+                        <p>十字型の展開図において、中央の面の裏側にある面について、その選び方のルールを答えなさい。</p>
+                        <details class="mt-2 text-xs text-indigo-700 cursor-pointer">
+                            <summary class="font-semibold">解答・解説を見る</summary>
+                            <p class="mt-1 text-slate-600">【答え】十字の突き出し部分同士が向かい合う、あるいは一列を形成する両端の面が対面になります。</p>
+                        </details>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-lg border">
+                        <p class="font-semibold text-slate-900">問3</p>
+                        <p>ある展開図を組み立てたとき、面「ア」の周囲にある面は全部でいくつですか。</p>
+                        <details class="mt-2 text-xs text-indigo-700 cursor-pointer">
+                            <summary class="font-semibold">解答・解説を見る</summary>
+                            <p class="mt-1 text-slate-600">【答え】4つ（立方体は1つの面につき、4つの面と隣り合い、1つの面だけが向かい合います）。</p>
+                        </details>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-lg border">
+                        <p class="font-semibold text-slate-900">問4</p>
+                        <p>展開図上で離れた位置にある「A」と「B」の面を隣り合わせるために、どの辺で折ればよいですか。</p>
+                        <details class="mt-2 text-xs text-indigo-700 cursor-pointer">
+                            <summary class="font-semibold">解答・解説を見る</summary>
+                            <p class="mt-1 text-slate-600">【答え】間の面を山折り・谷折り交互に行ってスライドさせることで、隣接させることができます。</p>
+                        </details>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-lg border">
+                        <p class="font-semibold text-slate-900">問5</p>
+                        <p>不規則な形をした11種類の立方体展開図のうち、最も多く出題される基本の「一列型（4個＋上下）」で、端の面同士の連結関係はどうなっていますか。</p>
+                        <details class="mt-2 text-xs text-indigo-700 cursor-pointer">
+                            <summary class="font-semibold">解答・解説を見る</summary>
+                            <p class="mt-1 text-slate-600">【答え】組み立てたときに同じ面（重なり合う面）になります。</p>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- パターン3 -->
+        <section class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="bg-blue-500 text-white font-bold text-sm px-3 py-1 rounded-lg">出題頻度 第3位</span>
+                <h2 class="text-2xl font-bold text-slate-900">パターン3：3方向からの見え方・裏返しの判定</h2>
+            </div>
+            <p class="text-slate-600 mb-6 text-sm">
+                同じサイコロを異なる角度（正面、右側面、上面など）から3回撮影した図が与えられ、見えていない裏側の目や、隠された側面の目を特定する問題です。
+            </p>
+
+            <!-- 例題 -->
+            <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 mb-6">
+                <h3 class="font-bold text-slate-900 mb-2">【例題3】</h3>
+                <p class="text-sm text-slate-700 mb-4">
+                    1個のサイコロを3つの方向から見たとき、正面が「2」、右側面が「3」、上面が「1」のとき、正面が「5」のときの右側面の目を求めなさい。（一般的なサイコロとします）
+                </p>
+
+                <div class="space-y-4 text-sm text-slate-700 border-t pt-4">
+                    <div>
+                        <strong class="text-indigo-900">💡 効率的な解き方（「右回り・左回り」の順序確認法）：</strong>
+                        <p class="mt-1">
+                            サイコロをある方向から見たとき、正面・右側面・上面・底面・左側面・裏面のうち、見える3つの面（例：前・右・上）の<strong>「配置の回転方向（時計回りか反時計回りか）」</strong>に着目します。
+                            一般的なサイコロは、例えば「1」を上にしたとき、「2, 3, 5, 4」がどのような順番で周囲を取り囲んでいるかという「右手系・左手系（鏡像関係）」が決まっています。
+                        </p>
+                    </div>
+                    <div>
+                        <strong class="text-indigo-900">✨ 解き方のコツ：</strong>
+                        <p class="mt-1">
+                            複雑に考えず、まずは<strong>「確定している対面（1と6、2と5、3と4）」</strong>を書き出し、見えている面から「見えていない裏側の3面」を完全に特定することです。裏側の3面の配置関係が分かれば、どの角度から見た図であっても瞬時に答えが出せます。
+                        </p>
+                    </div>
+                    <div>
+                        <strong class="text-indigo-900">🔍 別解（指折りシミュレーション法）：</strong>
+                        <p class="mt-1">
+                            消しゴムや手元の筆箱をサイコロに見立て、親指と人差し指で特定の数字の上下左右を実際に確認するアナログ手法です。直感的に理解しやすいため、初学者におすすめです。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- パターン3 類題5問 -->
+            <div class="mt-6 border-t pt-6">
+                <h4 class="font-bold text-indigo-900 mb-4">📝 パターン3 類題演習（全5問）</h4>
+                <div class="space-y-4 text-sm text-slate-700">
+                    <div class="bg-slate-50 p-4 rounded-lg border">
+                        <p class="font-semibold text-slate-900">問1</p>
+                        <p>あるサイコロを2方向から見たとき、正面が「4」、右が「1」、上が「2」の図と、正面が「4」、右が「6」、上が「5」の図がありました。「4」の裏側（向かい合う面）の目は何ですか。</p>
+                        <details class="mt-2 text-xs text-indigo-700 cursor-pointer">
+                            <summary class="font-semibold">解答・解説を見る</summary>
+                            <p class="mt-1 text-slate-600">【答え】「4」のまわりの隣り合う面（1, 2, 6, 5）をすべて特定すると、残る1面が裏側になります。</p>
+                        </details>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-lg border">
+                        <p class="font-semibold text-slate-900">問2</p>
+                        <p>3つの異なる方向から見たサイコロの図で、どの図にも「3」が含まれています。「3」の上下左右にある数字をすべて書き出しなさい。</p>
+                        <details class="mt-2 text-xs text-indigo-700 cursor-pointer">
+                            <summary class="font-semibold">解答・解説を見る</summary>
+                            <p class="mt-1 text-slate-600">【答え】3に隣り合う4つの面を集めることで、対面（4）以外のすべての面を列挙できます。</p>
+                        </details>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-lg border">
+                        <p class="font-semibold text-slate-900">問3</p>
+                        <p>サイコロの展開図を組み立てたものと、実物を3方向から撮影した写真が一致するかどうかを判定する問題で、最も確実に見分けるポイントは何ですか。</p>
+                        <details class="mt-2 text-xs text-indigo-700 cursor-pointer">
+                            <summary class="font-semibold">解答・解説を見る</summary>
+                            <p class="mt-1 text-slate-600">【答え】3つの数字の並びが「時計回り」か「反時計回り」か（回転方向の向き）を確認することです。</p>
+                        </details>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-lg border">
+                        <p class="font-semibold text-slate-900">問4</p>
+                        <p>特殊なマーク（〇、×、△、□、☆、◇）が書かれたサイコロについて、2つの図から「☆」の向かい側のマークを決定しなさい。</p>
+                        <details class="mt-2 text-xs text-indigo-700 cursor-pointer">
+                            <summary class="font-semibold">解答・解説を見る</summary>
+                            <p class="mt-1 text-slate-600">【答え】両方の図に共通して現れるマークを手がかりに、隣り合うマークを除外していくことで特定できます。</p>
+                        </details>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-lg border">
+                        <p class="font-semibold text-slate-900">問5</p>
+                        <p>サイコロをななめ上から見たとき、同時に見える面の数は最大でいくつですか。また、決して同時に見えない面の関係を何と呼びますか。</p>
+                        <details class="mt-2 text-xs text-indigo-700 cursor-pointer">
+                            <summary class="font-semibold">解答・解説を見る</summary>
+                            <p class="mt-1 text-slate-600">【答え】同時に見えるのは最大3面。決して同時に見えないのは「向かい合う面（対面）」の関係です。</p>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- まとめ・応援メッセージ -->
+        <section class="bg-indigo-50 p-6 md:p-8 rounded-2xl border border-indigo-100 text-center">
+            <h3 class="text-xl font-bold text-indigo-900 mb-2">✨ 最後に：合格に向けたアドバイス</h3>
+            <p class="text-sm text-indigo-700 max-w-2xl mx-auto mb-4">
+                サイコロ問題は、パズル的な楽しさがある一方で、直感だけに頼るとケアレスミスが起きやすい分野です。「回転の周期」や「展開図のルール」を武器にして、頭の中だけでなく手を動かして図にメモしながら解く習慣をつけましょう。毎日の積み重ねが必ず得点力につながります。応援しています！
+            </p>
+            <span class="inline-block bg-indigo-600 text-white text-xs font-bold px-4 py-2 rounded-full">志望校合格に向けて頑張ろう！</span>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-6 text-xs text-slate-400 border-t border-slate-200">
+        中学受験算数 サイコロ問題完全攻略マニュアル &copy; 2026
+    </footer>
+
+</body>
+</html>
+```eof
+
+中学受験の算数で頻出する「サイコロ問題」を、出題頻度順に3つのパターン（ころがし・回転移動、展開図・向かい合う面、3方向からの見え方）に分類し、それぞれの例題、効率的な解き方、コツ、別解、さらに各パターン5問ずつの類題演習をまとめた完全版の学習資料を作成しました。HTML/Tailwind CSSによる美しいデザインと、分かりやすい視覚的要素を取り入れています。志望校合格に向けてぜひご活用ください！
